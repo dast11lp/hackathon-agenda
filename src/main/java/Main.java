@@ -1,8 +1,10 @@
+import controlador.AgendaControlador;
 import vista.ComponentesGraficos;
 
 public class Main {
+    public static void main(String[] args) {
 
-    public static void main (String[] args) {
-        ComponentesGraficos ventana = new ComponentesGraficos();
+        ComponentesGraficos vista = new ComponentesGraficos();
+        new AgendaControlador(vista);
     }
 }
