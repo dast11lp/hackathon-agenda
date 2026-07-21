@@ -6,9 +6,12 @@ import java.awt.*;
 public class ComponentesGraficos {
 
     private JFrame frame;
+
+    private JPanel mainPanel;
     private JPanel header;
     private JPanel inputsForm;
     private JPanel buttonsLayout;
+    private JPanel contactPanel;
 
     public ComponentesGraficos() {
 
@@ -16,67 +19,103 @@ public class ComponentesGraficos {
 
         renderHeader();
         renderInputs();
-
         renderButtonsLayout();
+        renderContacts();
 
         frame.setVisible(true);
     }
 
     private void createFrame() {
+
         frame = new JFrame("Agenda de Contactos");
 
         frame.setSize(1000, 720);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
 
-        // Layout principal del JFrame
-        frame.setLayout(new FlowLayout());
+        renderMainPanel();;
+    }
+
+    private void renderMainPanel() {
+        mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+
+        frame.add(mainPanel);
     }
 
     private void renderHeader() {
 
-        header = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        header = new JPanel();
 
         JLabel titulo = new JLabel("Agenda de Contactos");
         titulo.setFont(new Font("Arial", Font.BOLD, 24));
-
         header.add(titulo);
-
-        frame.add(header, BorderLayout.NORTH);
+        mainPanel.add(header);
     }
 
     private void renderInputs() {
 
         inputsForm = new JPanel();
+        inputsForm.setLayout(new BoxLayout(inputsForm, BoxLayout.Y_AXIS));
 
-        // 3 filas, 2 columnas
-        inputsForm.setLayout(new GridLayout(3, 2, 10, 10));
+        // ===== Nombre =====
+        JPanel filaNombre = new JPanel();
+        filaNombre.add(new JLabel("Nombre:"));
+        filaNombre.add(new JTextField(15));
 
-        inputsForm.add(new JLabel("Nombre:"));
-        inputsForm.add(new JTextField());
+        // ===== Apellido =====
+        JPanel filaApellido = new JPanel();
+        filaApellido.add(new JLabel("Apellido:"));
+        filaApellido.add(new JTextField(15));
 
-        inputsForm.add(new JLabel("Apellido:"));
-        inputsForm.add(new JTextField());
+        // ===== Teléfono =====
+        JPanel filaTelefono = new JPanel();
+        filaTelefono.add(new JLabel("Teléfono:"));
+        filaTelefono.add(new JTextField(15));
 
-        inputsForm.add(new JLabel("Teléfono:"));
-        inputsForm.add(new JTextField());
+        // Agregar las filas al formulario
+        inputsForm.add(filaNombre);
+        inputsForm.add(filaApellido);
+        inputsForm.add(filaTelefono);
 
-        frame.add(inputsForm, BorderLayout.CENTER);
+        mainPanel.add(inputsForm);
     }
 
+    private void renderButtonsLayout() {
 
-    public void renderButtonsLayout () {
-        this.buttonsLayout = new JPanel();
+        buttonsLayout = new JPanel();
 
-        JButton addContact = new JButton("Agregar");
-        JButton removeContact = new JButton("Modificar");
-        JButton updateContact = new JButton("Eliminar");
+        JButton agregar = new JButton("Agregar");
+        JButton modificar = new JButton("Modificar");
+        JButton eliminar = new JButton("Eliminar");
 
-        this.buttonsLayout.add(addContact);
-        this.buttonsLayout.add(removeContact);
-        this.buttonsLayout.add(updateContact);
+        buttonsLayout.add(agregar);
+        buttonsLayout.add(modificar);
+        buttonsLayout.add(eliminar);
 
-        this.frame.add(buttonsLayout);
+        mainPanel.add(buttonsLayout);
+    }
 
+    private void renderContacts() {
+
+        contactPanel = new JPanel();
+
+        JLabel titulo = new JLabel("Contactos");
+
+        contactPanel.add(titulo);
+
+        renderCardContact();
+
+        mainPanel.add(contactPanel);
+    }
+
+    private void renderCardContact() {
+
+        JLabel nombre = new JLabel("Carlos Perez");
+        JLabel telefono = new JLabel("+57 3014794420");
+
+        contactPanel.add(nombre);
+        contactPanel.add(telefono);
+        this.contactPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
     }
 }
