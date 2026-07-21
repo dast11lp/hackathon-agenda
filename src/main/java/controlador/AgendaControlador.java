@@ -83,7 +83,7 @@ public class AgendaControlador {
         String nombre = partes[0];
         String apellido = partes.length > 1 ? partes[1] : "";
 
-        String contactoNumero = agenda.buscarContactoTelefono(nombre, apellido);
+        String contactoNumero = agenda.buscarContacto(nombre, apellido);
 
         if (contactoNumero != null ) {
             JOptionPane.showMessageDialog(null, contactoNumero);
