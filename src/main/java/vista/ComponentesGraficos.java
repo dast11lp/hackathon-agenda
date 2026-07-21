@@ -4,7 +4,6 @@ import modelo.Contacto;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -18,6 +17,16 @@ public class ComponentesGraficos {
     private JPanel buttonsLayout;
     private JPanel searchPanel;
     private JPanel contactPanel;
+
+    private JTextField campoNombre;
+    private JTextField campoApellido;
+    private JTextField campoTelefono;
+    private JTextField campoBuscar;
+
+    private JButton botonAgregar;
+    private JButton botonModificar;
+    private JButton botonEliminar;
+    private JButton botonBuscar;
 
     public ComponentesGraficos() {
 
@@ -53,6 +62,7 @@ public class ComponentesGraficos {
     private void renderMainPanel() {
         mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
         frame.add(mainPanel);
     }
@@ -62,7 +72,7 @@ public class ComponentesGraficos {
         header = new JPanel();
 
         JLabel titulo = new JLabel("Agenda de Contactos");
-        titulo.setFont(new Font("Arial", Font.BOLD, 24));
+        titulo.setFont(new Font("Segoe UI", Font.BOLD, 24));
         header.add(titulo);
 
         header.setMaximumSize(header.getPreferredSize());
@@ -76,20 +86,21 @@ public class ComponentesGraficos {
         inputsForm = new JPanel();
         inputsForm.setLayout(new BoxLayout(inputsForm, BoxLayout.Y_AXIS));
 
+        campoNombre = new JTextField(15);
+        campoApellido = new JTextField(15);
+        campoTelefono = new JTextField(15);
 
         JPanel filaNombre = new JPanel();
         filaNombre.add(new JLabel("Nombre:"));
-        filaNombre.add(new JTextField(15));
-
+        filaNombre.add(campoNombre);
 
         JPanel filaApellido = new JPanel();
         filaApellido.add(new JLabel("Apellido:"));
-        filaApellido.add(new JTextField(15));
-
+        filaApellido.add(campoApellido);
 
         JPanel filaTelefono = new JPanel();
         filaTelefono.add(new JLabel("Teléfono:"));
-        filaTelefono.add(new JTextField(15));
+        filaTelefono.add(campoTelefono);
 
         // Agregar las filas al formulario
         inputsForm.add(filaNombre);
@@ -105,13 +116,13 @@ public class ComponentesGraficos {
 
         buttonsLayout = new JPanel();
 
-        JButton agregar = new JButton("Agregar");
-        JButton modificar = new JButton("Modificar");
-        JButton eliminar = new JButton("Eliminar");
+        botonAgregar = new JButton("Agregar");
+        botonModificar = new JButton("Modificar");
+        botonEliminar = new JButton("Eliminar");
 
-        buttonsLayout.add(agregar);
-        buttonsLayout.add(modificar);
-        buttonsLayout.add(eliminar);
+        buttonsLayout.add(botonAgregar);
+        buttonsLayout.add(botonModificar);
+        buttonsLayout.add(botonEliminar);
 
         buttonsLayout.setMaximumSize(buttonsLayout.getPreferredSize());
 
@@ -123,8 +134,8 @@ public class ComponentesGraficos {
         searchPanel = new JPanel();
 
         JLabel labelBuscar = new JLabel("Buscar:");
-        JTextField campoBuscar = new JTextField(15);
-        JButton botonBuscar = new JButton("Buscar");
+        campoBuscar = new JTextField(15);
+        botonBuscar = new JButton("Buscar");
 
         searchPanel.add(labelBuscar);
         searchPanel.add(campoBuscar);
@@ -136,13 +147,14 @@ public class ComponentesGraficos {
 
     }
 
-
     private void renderContacts(List<Contacto> contactos) {
 
         contactPanel = new JPanel();
         contactPanel.setLayout(new BoxLayout(contactPanel, BoxLayout.Y_AXIS));
+        contactPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         JLabel titulo = new JLabel("Lista de Contactos");
+        titulo.setFont(new Font("Segoe UI", Font.BOLD, 16));
         titulo.setAlignmentX(Component.RIGHT_ALIGNMENT);
 
         contactPanel.add(titulo);
@@ -158,13 +170,59 @@ public class ComponentesGraficos {
     private void renderCardContact(List<Contacto> contactos) {
 
         for (Contacto contacto : contactos) {
+
             JPanel card = new JPanel();
-            JLabel nombre = new JLabel(contacto.getNombre() + " " + contacto.getApellido() );
-            JLabel telefono = new JLabel(contacto.getTelefono());
+            card.setBackground(Color.WHITE);
+            card.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 1));
+
+            JLabel nombre = new JLabel(contacto.getNombre() + " " + contacto.getApellido());
+            nombre.setFont(new Font("Segoe UI", Font.BOLD, 14));
+
+            JLabel telefono = new JLabel("   " + contacto.getTelefono());
+            telefono.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+            telefono.setForeground(new Color(100, 100, 100));
+
             card.add(nombre);
             card.add(telefono);
-            card.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+
             contactPanel.add(card);
+            contactPanel.add(Box.createVerticalStrut(6));
         }
+    }
+
+    public JTextField getCampoNombre() {
+        return campoNombre;
+    }
+
+    public JTextField getCampoApellido() {
+        return campoApellido;
+    }
+
+    public JTextField getCampoTelefono() {
+        return campoTelefono;
+    }
+
+    public JTextField getCampoBuscar() {
+        return campoBuscar;
+    }
+
+    public JButton getBotonAgregar() {
+        return botonAgregar;
+    }
+
+    public JButton getBotonModificar() {
+        return botonModificar;
+    }
+
+    public JButton getBotonEliminar() {
+        return botonEliminar;
+    }
+
+    public JButton getBotonBuscar() {
+        return botonBuscar;
+    }
+
+    public JPanel getContactPanel() {
+        return contactPanel;
     }
 }
