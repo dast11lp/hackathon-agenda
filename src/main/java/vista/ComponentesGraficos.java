@@ -5,6 +5,7 @@ import modelo.Contacto;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -46,6 +47,9 @@ public class ComponentesGraficos {
         renderButtonsLayout();
         renderSearch();
 
+        renderContacts(new ArrayList<>());
+
+        frame.setVisible(true);
     }
 
     private void preguntarCapacidad() {
