@@ -85,9 +85,7 @@ public class AgendaControlador {
 
         String contactoNumero = agenda.buscarContactoTelefono(nombre, apellido);
 
-
-
-        if (contactoNumero != null || !contactoNumero.isEmpty() || !contactoNumero.isBlank()) {
+        if (contactoNumero != null ) {
             JOptionPane.showMessageDialog(null, contactoNumero);
         } else {
             JOptionPane.showMessageDialog(null, "Contacto no encontrado.");
