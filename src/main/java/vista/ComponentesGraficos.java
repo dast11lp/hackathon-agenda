@@ -124,6 +124,7 @@ public class ComponentesGraficos {
 
     }
 
+
     private void renderContacts() {
 
         contactPanel = new JPanel();
