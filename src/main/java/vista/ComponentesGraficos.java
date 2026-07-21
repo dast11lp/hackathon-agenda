@@ -112,12 +112,16 @@ public class ComponentesGraficos {
     private void renderHeader() {
 
         header = new JPanel();
+        header.setBackground(new Color(43, 76, 126));
+        header.setBorder(BorderFactory.createEmptyBorder(15, 10, 15, 10));
 
         JLabel titulo = new JLabel("Agenda de Contactos");
-        titulo.setFont(new Font("Segoe UI", Font.BOLD, 24));
+        titulo.setFont(new Font("Segoe UI", Font.BOLD, 28));
+        titulo.setForeground(Color.WHITE);
+
         header.add(titulo);
 
-        header.setMaximumSize(header.getPreferredSize());
+        header.setMaximumSize(new Dimension(Integer.MAX_VALUE, 70));
 
         mainPanel.add(header);
 
@@ -161,9 +165,28 @@ public class ComponentesGraficos {
         botonModificar = new JButton("Modificar");
         botonEliminar = new JButton("Eliminar");
 
+        botonAgregar.setBackground(new Color(46, 139, 87));   // verde
+        botonAgregar.setForeground(Color.WHITE);
+        botonAgregar.setOpaque(true);
+        botonAgregar.setBorderPainted(false);
+        botonAgregar.setFocusPainted(false);
+
+        botonModificar.setBackground(new Color(255, 165, 0)); // naranja
+        botonModificar.setForeground(Color.WHITE);
+        botonModificar.setOpaque(true);
+        botonModificar.setBorderPainted(false);
+        botonModificar.setFocusPainted(false);
+
+        botonEliminar.setBackground(new Color(200, 30, 30));  // rojo
+        botonEliminar.setForeground(Color.WHITE);
+        botonEliminar.setOpaque(true);
+        botonEliminar.setBorderPainted(false);
+        botonEliminar.setFocusPainted(false);
+
         buttonsLayout.add(botonAgregar);
         buttonsLayout.add(botonModificar);
         buttonsLayout.add(botonEliminar);
+
 
         buttonsLayout.setMaximumSize(buttonsLayout.getPreferredSize());
 
