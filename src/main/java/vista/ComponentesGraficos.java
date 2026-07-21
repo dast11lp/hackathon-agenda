@@ -35,7 +35,7 @@ public class ComponentesGraficos {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
 
-        renderMainPanel();;
+        renderMainPanel();
     }
 
     private void renderMainPanel() {
@@ -148,6 +148,5 @@ public class ComponentesGraficos {
         card.add(telefono);
         card.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         contactPanel.add(card);
-
     }
 }
