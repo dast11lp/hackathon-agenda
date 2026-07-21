@@ -102,10 +102,18 @@ public class Agenda {
         return null;
     }
 
+    // Modifico metodo para que no solo ordene por nombre sino también por apellido
     public List<Contacto> listarContactos() {
 
-        contactos.sort((c1, c2) ->
-                c1.getNombre().compareToIgnoreCase(c2.getNombre()));
+        contactos.sort((c1, c2) -> {
+            int comparacion = c1.getNombre().compareToIgnoreCase(c2.getNombre());
+
+            if (comparacion == 0) {
+                return c1.getApellido().compareToIgnoreCase(c2.getApellido());
+            }
+
+            return comparacion;
+        });
 
         return contactos;
     }
