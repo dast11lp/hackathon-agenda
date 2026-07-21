@@ -11,6 +11,7 @@ public class ComponentesGraficos {
     private JPanel header;
     private JPanel inputsForm;
     private JPanel buttonsLayout;
+    private JPanel searchPanel;
     private JPanel contactPanel;
 
     public ComponentesGraficos() {
@@ -20,6 +21,7 @@ public class ComponentesGraficos {
         renderHeader();
         renderInputs();
         renderButtonsLayout();
+        renderSearch();
         renderContacts();
 
         frame.setVisible(true);
@@ -50,7 +52,11 @@ public class ComponentesGraficos {
         JLabel titulo = new JLabel("Agenda de Contactos");
         titulo.setFont(new Font("Arial", Font.BOLD, 24));
         header.add(titulo);
+
+        header.setMaximumSize(header.getPreferredSize());
+
         mainPanel.add(header);
+
     }
 
     private void renderInputs() {
@@ -58,17 +64,17 @@ public class ComponentesGraficos {
         inputsForm = new JPanel();
         inputsForm.setLayout(new BoxLayout(inputsForm, BoxLayout.Y_AXIS));
 
-        // ===== Nombre =====
+
         JPanel filaNombre = new JPanel();
         filaNombre.add(new JLabel("Nombre:"));
         filaNombre.add(new JTextField(15));
 
-        // ===== Apellido =====
+
         JPanel filaApellido = new JPanel();
         filaApellido.add(new JLabel("Apellido:"));
         filaApellido.add(new JTextField(15));
 
-        // ===== Teléfono =====
+
         JPanel filaTelefono = new JPanel();
         filaTelefono.add(new JLabel("Teléfono:"));
         filaTelefono.add(new JTextField(15));
@@ -77,6 +83,8 @@ public class ComponentesGraficos {
         inputsForm.add(filaNombre);
         inputsForm.add(filaApellido);
         inputsForm.add(filaTelefono);
+
+        inputsForm.setMaximumSize(inputsForm.getPreferredSize());
 
         mainPanel.add(inputsForm);
     }
@@ -93,29 +101,53 @@ public class ComponentesGraficos {
         buttonsLayout.add(modificar);
         buttonsLayout.add(eliminar);
 
+        buttonsLayout.setMaximumSize(buttonsLayout.getPreferredSize());
+
         mainPanel.add(buttonsLayout);
+    }
+
+    private void renderSearch() {
+
+        searchPanel = new JPanel();
+
+        JLabel labelBuscar = new JLabel("Buscar:");
+        JTextField campoBuscar = new JTextField(15);
+        JButton botonBuscar = new JButton("Buscar");
+
+        searchPanel.add(labelBuscar);
+        searchPanel.add(campoBuscar);
+        searchPanel.add(botonBuscar);
+
+        searchPanel.setMaximumSize(searchPanel.getPreferredSize());
+
+        mainPanel.add(searchPanel);
+
     }
 
     private void renderContacts() {
 
         contactPanel = new JPanel();
+        contactPanel.setLayout(new BoxLayout(contactPanel, BoxLayout.Y_AXIS));
 
-        JLabel titulo = new JLabel("Contactos");
+        JLabel titulo = new JLabel("Lista de Contactos");
+        titulo.setAlignmentX(Component.RIGHT_ALIGNMENT);
 
         contactPanel.add(titulo);
-
         renderCardContact();
+        contactPanel.setMaximumSize(contactPanel.getPreferredSize());
 
         mainPanel.add(contactPanel);
+
     }
 
     private void renderCardContact() {
-
+        JPanel card = new JPanel();
         JLabel nombre = new JLabel("Carlos Perez");
         JLabel telefono = new JLabel("+57 3014794420");
+        card.add(nombre);
+        card.add(telefono);
+        card.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        contactPanel.add(card);
 
-        contactPanel.add(nombre);
-        contactPanel.add(telefono);
-        this.contactPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
     }
 }
