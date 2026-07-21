@@ -46,15 +46,6 @@ public class ComponentesGraficos {
         renderButtonsLayout();
         renderSearch();
 
-        List<Contacto> contactosPrueba = Arrays.asList(
-                new Contacto("Pepito", "Perez", "+573014794421"),
-                new Contacto("Ana", "Lopez", "+573009876543"),
-                new Contacto("Marta", "Gomez", "+573151234567")
-        );
-
-        renderContacts(contactosPrueba);
-
-        frame.setVisible(true);
     }
 
     private void preguntarCapacidad() {
