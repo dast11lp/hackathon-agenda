@@ -1,7 +1,12 @@
 package vista;
 
+import modelo.Contacto;
+
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class ComponentesGraficos {
 
@@ -22,7 +27,14 @@ public class ComponentesGraficos {
         renderInputs();
         renderButtonsLayout();
         renderSearch();
-        renderContacts();
+
+        List<Contacto> contactosPrueba = Arrays.asList(
+                new Contacto("Pepito", "Perez", "+573014794421"),
+                new Contacto("Ana", "Lopez", "+573009876543"),
+                new Contacto("Marta", "Gomez", "+573151234567")
+        );
+
+        renderContacts(contactosPrueba);
 
         frame.setVisible(true);
     }
@@ -125,7 +137,7 @@ public class ComponentesGraficos {
     }
 
 
-    private void renderContacts() {
+    private void renderContacts(List<Contacto> contactos) {
 
         contactPanel = new JPanel();
         contactPanel.setLayout(new BoxLayout(contactPanel, BoxLayout.Y_AXIS));
@@ -134,20 +146,25 @@ public class ComponentesGraficos {
         titulo.setAlignmentX(Component.RIGHT_ALIGNMENT);
 
         contactPanel.add(titulo);
-        renderCardContact();
+
+        renderCardContact(contactos);
+
         contactPanel.setMaximumSize(contactPanel.getPreferredSize());
 
         mainPanel.add(contactPanel);
 
     }
 
-    private void renderCardContact() {
-        JPanel card = new JPanel();
-        JLabel nombre = new JLabel("Carlos Perez");
-        JLabel telefono = new JLabel("+57 3014794420");
-        card.add(nombre);
-        card.add(telefono);
-        card.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-        contactPanel.add(card);
+    private void renderCardContact(List<Contacto> contactos) {
+
+        for (Contacto contacto : contactos) {
+            JPanel card = new JPanel();
+            JLabel nombre = new JLabel(contacto.getNombre() + " " + contacto.getApellido() );
+            JLabel telefono = new JLabel(contacto.getTelefono());
+            card.add(nombre);
+            card.add(telefono);
+            card.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+            contactPanel.add(card);
+        }
     }
 }
