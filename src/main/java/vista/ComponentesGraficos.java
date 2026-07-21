@@ -32,7 +32,12 @@ public class ComponentesGraficos {
     private JTable tablaContactos;
     private DefaultTableModel modeloTabla;
 
+    private static final int CAPACIDAD_POR_DEFECTO = 10;
+    private int capacidadAgenda;
+
     public ComponentesGraficos() {
+
+        preguntarCapacidad();
 
         createFrame();
 
@@ -50,6 +55,48 @@ public class ComponentesGraficos {
         renderContacts(contactosPrueba);
 
         frame.setVisible(true);
+    }
+
+    private void preguntarCapacidad() {
+
+        int respuesta = JOptionPane.showConfirmDialog(
+                null,
+                "¿Deseas usar el tamaño por defecto de la agenda (" + CAPACIDAD_POR_DEFECTO + ")?",
+                "Tamaño de la agenda",
+                JOptionPane.YES_NO_OPTION
+        );
+
+        if (respuesta == JOptionPane.YES_OPTION) {
+            capacidadAgenda = CAPACIDAD_POR_DEFECTO;
+            return;
+        }
+
+        boolean valido = false;
+
+        while (!valido) {
+            String entrada = JOptionPane.showInputDialog(
+                    null,
+                    "Ingresa el tamaño que deseas para la agenda (mínimo 1):",
+                    "Tamaño personalizado",
+                    JOptionPane.QUESTION_MESSAGE
+            );
+
+            if (entrada == null) {
+                System.exit(0);;
+            }
+
+            try {
+                int numero = Integer.parseInt(entrada.trim());
+                if (numero >= 1 && numero <=20) {
+                    capacidadAgenda = numero;
+                    valido = true;
+                } else {
+                    JOptionPane.showMessageDialog(null, "El tamaño debe ser mayor o igual a 1 y menor o igual a 20");
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Ingresa un número válido.");
+            }
+        }
     }
 
     private void createFrame() {
@@ -259,5 +306,9 @@ public class ComponentesGraficos {
 
     public JTable getTablaContactos() {
         return tablaContactos;
+    }
+
+    public int getCapacidadAgenda() {
+        return capacidadAgenda;
     }
 }

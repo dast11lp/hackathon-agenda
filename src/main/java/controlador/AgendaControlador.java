@@ -19,12 +19,11 @@ public class AgendaControlador {
     public AgendaControlador(ComponentesGraficos vista) {
 
         this.vista = vista;
-        this.agenda = new Agenda();
+        this.agenda = new Agenda(vista.getCapacidadAgenda());
 
-        // Cargar la lista inicialmente (vacía)
         vista.actualizarContactos(agenda.listarContactos());
 
-        // Conectar los botones
+
         iniciarEventos();
     }
 
@@ -38,6 +37,7 @@ public class AgendaControlador {
 
         vista.getBotonModificar().addActionListener(e -> modificarTelefono());
     }
+
 
     private void agregarContacto() {
 
