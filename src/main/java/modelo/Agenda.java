@@ -92,6 +92,8 @@ public class Agenda {
 
     public Contacto buscarContacto(String nombre, String apellido) {
 
+        String nombreYApellido = nombre+apellido;
+
         for (Contacto contacto : contactos) {
             if (contacto.getNombre().equalsIgnoreCase(nombre)
                     && contacto.getApellido().equalsIgnoreCase(apellido)) {
@@ -99,6 +101,24 @@ public class Agenda {
             }
         }
 
+        return null;
+    }
+
+
+    public String buscarContactoTelefono(String nombre, String apellido) {
+
+        String nombreYApellido = nombre+apellido;
+
+        System.out.println(nombreYApellido);
+
+        for (Contacto contacto : contactos) {
+            String nombreYApellidoAgenda = contacto.getNombre() + contacto.getApellido();
+
+            if (nombreYApellido.equalsIgnoreCase(nombreYApellidoAgenda)) {
+
+                return contacto.getTelefono();
+            }
+        }
         return null;
     }
 

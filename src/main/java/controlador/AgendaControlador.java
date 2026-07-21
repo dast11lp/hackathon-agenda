@@ -78,24 +78,19 @@ public class AgendaControlador {
 
     private void buscarContacto() {
 
-        String nombre = vista.getCampoNombre().getText();
-        String apellido = vista.getCampoApellido().getText();
+        String texto = vista.getCampoBuscar().getText().trim();
+        String[] partes = texto.split("\\s+", 2);
+        String nombre = partes[0];
+        String apellido = partes.length > 1 ? partes[1] : "";
 
-        Contacto contacto = agenda.buscarContacto(nombre, apellido);
+        String contactoNumero = agenda.buscarContactoTelefono(nombre, apellido);
 
-        if (contacto != null) {
 
-            JOptionPane.showMessageDialog(
-                    null,
-                    contacto.toString()
-            );
 
+        if (contactoNumero != null || !contactoNumero.isEmpty() || !contactoNumero.isBlank()) {
+            JOptionPane.showMessageDialog(null, contactoNumero);
         } else {
-
-            JOptionPane.showMessageDialog(
-                    null,
-                    "Contacto no encontrado."
-            );
+            JOptionPane.showMessageDialog(null, "Contacto no encontrado.");
         }
     }
 
