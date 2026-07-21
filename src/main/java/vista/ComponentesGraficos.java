@@ -170,6 +170,25 @@ public class ComponentesGraficos {
         botonModificar = new JButton("Modificar");
         botonEliminar = new JButton("Eliminar");
 
+        // Colores de los botones
+        botonAgregar.setBackground(new Color(46, 139, 87));   // verde
+        botonAgregar.setForeground(Color.WHITE);
+        botonAgregar.setOpaque(true);
+        botonAgregar.setBorderPainted(false);
+        botonAgregar.setFocusPainted(false);
+
+        botonModificar.setBackground(new Color(255, 165, 0)); // naranja
+        botonModificar.setForeground(Color.WHITE);
+        botonModificar.setOpaque(true);
+        botonModificar.setBorderPainted(false);
+        botonModificar.setFocusPainted(false);
+
+        botonEliminar.setBackground(new Color(200, 30, 30));  // rojo
+        botonEliminar.setForeground(Color.WHITE);
+        botonEliminar.setOpaque(true);
+        botonEliminar.setBorderPainted(false);
+        botonEliminar.setFocusPainted(false);
+
         buttonsLayout.add(botonAgregar);
         buttonsLayout.add(botonModificar);
         buttonsLayout.add(botonEliminar);
