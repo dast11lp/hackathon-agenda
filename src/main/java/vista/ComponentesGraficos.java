@@ -3,8 +3,8 @@ package vista;
 import modelo.Contacto;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,7 +29,8 @@ public class ComponentesGraficos {
     private JButton botonEliminar;
     private JButton botonBuscar;
 
-    private List<Contacto> listaContactos = new ArrayList<>();
+    private JTable tablaContactos;
+    private DefaultTableModel modeloTabla;
 
     public ComponentesGraficos() {
 
@@ -39,6 +40,14 @@ public class ComponentesGraficos {
         renderInputs();
         renderButtonsLayout();
         renderSearch();
+
+        List<Contacto> contactosPrueba = Arrays.asList(
+                new Contacto("Pepito", "Perez", "+573014794421"),
+                new Contacto("Ana", "Lopez", "+573009876543"),
+                new Contacto("Marta", "Gomez", "+573151234567")
+        );
+
+        renderContacts(contactosPrueba);
 
         frame.setVisible(true);
     }
@@ -97,7 +106,6 @@ public class ComponentesGraficos {
         filaTelefono.add(new JLabel("Teléfono:"));
         filaTelefono.add(campoTelefono);
 
-        // Agregar las filas al formulario
         inputsForm.add(filaNombre);
         inputsForm.add(filaApellido);
         inputsForm.add(filaTelefono);
@@ -150,46 +158,72 @@ public class ComponentesGraficos {
 
         JLabel titulo = new JLabel("Lista de Contactos");
         titulo.setFont(new Font("Segoe UI", Font.BOLD, 16));
-        titulo.setAlignmentX(Component.RIGHT_ALIGNMENT);
+        titulo.setAlignmentX(Component.LEFT_ALIGNMENT);
 
         contactPanel.add(titulo);
 
-        renderCardContact(contactos);
+        String[] columnas = {"Nombre", "Apellido", "Teléfono"};
+        modeloTabla = new DefaultTableModel(columnas, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
 
-        contactPanel.setMaximumSize(contactPanel.getPreferredSize());
+        tablaContactos = new JTable(modeloTabla);
+        tablaContactos.setRowHeight(24);
+        tablaContactos.setFont(new Font("Segoe UI", Font.PLAIN, 13));
+        tablaContactos.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 13));
+
+
+        tablaContactos.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                int fila = tablaContactos.getSelectedRow();
+                if (fila != -1) {
+                    campoNombre.setText((String) modeloTabla.getValueAt(fila, 0));
+                    campoApellido.setText((String) modeloTabla.getValueAt(fila, 1));
+                    campoTelefono.setText((String) modeloTabla.getValueAt(fila, 2));
+                }
+            }
+        });
+
+        JScrollPane scrollTabla = new JScrollPane(tablaContactos);
+        scrollTabla.setPreferredSize(new Dimension(600, 200));
+        scrollTabla.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        contactPanel.add(scrollTabla);
+
+        cargarFilas(contactos);
 
         mainPanel.add(contactPanel);
 
     }
 
-    private void renderCardContact(List<Contacto> contactos) {
-
+    private void cargarFilas(List<Contacto> contactos) {
         for (Contacto contacto : contactos) {
-
-            JPanel card = new JPanel();
-            card.setBackground(Color.WHITE);
-            card.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200), 1));
-
-            JLabel nombre = new JLabel(contacto.getNombre() + " " + contacto.getApellido());
-            nombre.setFont(new Font("Segoe UI", Font.BOLD, 14));
-
-            JLabel telefono = new JLabel("   " + contacto.getTelefono());
-            telefono.setFont(new Font("Segoe UI", Font.PLAIN, 12));
-            telefono.setForeground(new Color(100, 100, 100));
-
-            card.add(nombre);
-            card.add(telefono);
-
-            contactPanel.add(card);
-            contactPanel.add(Box.createVerticalStrut(6));
+            modeloTabla.addRow(new Object[]{
+                    contacto.getNombre(),
+                    contacto.getApellido(),
+                    contacto.getTelefono()
+            });
         }
     }
 
-    public void actualizarContactos (List<Contacto> contactos) {
-        this.listaContactos = contactos;
+
+    public void actualizarContactos(List<Contacto> contactos) {
+        modeloTabla.setRowCount(0);
+        cargarFilas(contactos);
     }
 
+    public String getContactoSeleccionado() {
+        int fila = tablaContactos.getSelectedRow();
+        if (fila == -1) return null;
 
+        String nombre = (String) modeloTabla.getValueAt(fila, 0);
+        String apellido = (String) modeloTabla.getValueAt(fila, 1);
+
+        return nombre + " " + apellido;
+    }
 
     public JTextField getCampoNombre() {
         return campoNombre;
@@ -223,7 +257,7 @@ public class ComponentesGraficos {
         return botonBuscar;
     }
 
-    public JPanel getContactPanel() {
-        return contactPanel;
+    public JTable getTablaContactos() {
+        return tablaContactos;
     }
 }
