@@ -11,22 +11,14 @@ public class Agenda {
     private List<Contacto> contactos;
     private int capacidadMaxima;
 
-    public Agenda(){
+    public Agenda() {
         contactos = new ArrayList<>();
         capacidadMaxima = 10;
     }
 
-    public Agenda(int capacidadMaxima){
+    public Agenda(int capacidadMaxima) {
         contactos = new ArrayList<>();
         this.capacidadMaxima = capacidadMaxima;
-    }
-
-    public int espaciosLibres(){
-        return capacidadMaxima - contactos.size();
-    }
-
-    public boolean agendaLlena(){
-        return contactos.size() >= capacidadMaxima;
     }
 
     private boolean validarTelefono(String telefono) {
@@ -34,7 +26,23 @@ public class Agenda {
         return Pattern.matches(regex, telefono);
     }
 
-    public Map<String , Object > añadirContacto(Contacto contacto) {
+    private boolean campoVacio(String texto) {
+        return texto == null || texto.trim().isEmpty();
+    }
+
+    public boolean agendaLlena() {
+        return contactos.size() >= capacidadMaxima;
+    }
+
+    public int espaciosLibres() {
+        return capacidadMaxima - contactos.size();
+    }
+
+    public boolean existeContacto(Contacto contacto) {
+        return contactos.contains(contacto);
+    }
+
+    public Map<String, Object> añadirContacto(Contacto contacto) {
 
         Map<String, Object> respuesta = new HashMap<>();
 
@@ -50,6 +58,24 @@ public class Agenda {
             return respuesta;
         }
 
+        if (campoVacio(contacto.getNombre())) {
+            respuesta.put("exito", false);
+            respuesta.put("mensaje", "El nombre es obligatorio.");
+            return respuesta;
+        }
+
+        if (campoVacio(contacto.getApellido())) {
+            respuesta.put("exito", false);
+            respuesta.put("mensaje", "El apellido es obligatorio.");
+            return respuesta;
+        }
+
+        if (!validarTelefono(contacto.getTelefono())) {
+            respuesta.put("exito", false);
+            respuesta.put("mensaje", "El teléfono tiene un formato inválido.");
+            return respuesta;
+        }
+
         if (existeContacto(contacto)) {
             respuesta.put("exito", false);
             respuesta.put("mensaje", "El contacto ya existe.");
@@ -62,41 +88,70 @@ public class Agenda {
         respuesta.put("mensaje", "Contacto agregado correctamente.");
 
         return respuesta;
-
     }
 
-    public boolean existeContacto(Contacto contacto) {
-        return contactos.contains(contacto);
-    }
-
-    public void listarContactos() {
-
-        if (contactos.isEmpty()) {
-            System.out.println("La agenda no tiene contactos registrados.");
-            return;
-        }
+    public Contacto buscarContacto(String nombre, String apellido) {
 
         for (Contacto contacto : contactos) {
-            System.out.println(contacto);
-        }
-
-    }
-
-    public Contacto buscaContacto(String dato) {
-
-        for (Contacto contacto : contactos) {
-
-            if (contacto.getNombre().equalsIgnoreCase(dato) || contacto.getApellido().equalsIgnoreCase(dato)
-                    || contacto.getTelefono().equals(dato)) {
-
+            if (contacto.getNombre().equalsIgnoreCase(nombre)
+                    && contacto.getApellido().equalsIgnoreCase(apellido)) {
                 return contacto;
             }
-
         }
 
         return null;
     }
 
+    public List<Contacto> listarContactos() {
+
+        contactos.sort((c1, c2) ->
+                c1.getNombre().compareToIgnoreCase(c2.getNombre()));
+
+        return contactos;
+    }
+
+    public Map<String, Object> modificarTelefono(String nombre, String apellido, String nuevoTelefono) {
+
+        Map<String, Object> respuesta = new HashMap<>();
+        Contacto contacto = buscarContacto(nombre, apellido);
+
+        if (contacto == null) {
+            respuesta.put("exito", false);
+            respuesta.put("mensaje", "El contacto no existe.");
+            return respuesta;
+        }
+
+        if (!validarTelefono(nuevoTelefono)) {
+            respuesta.put("exito", false);
+            respuesta.put("mensaje", "El teléfono tiene un formato inválido.");
+            return respuesta;
+        }
+
+        contacto.setTelefono(nuevoTelefono);
+
+        respuesta.put("exito", true);
+        respuesta.put("mensaje", "Teléfono actualizado correctamente.");
+
+        return respuesta;
+    }
+
+    public Map<String, Object> eliminarContacto(String nombre, String apellido) {
+
+        Map<String, Object> respuesta = new HashMap<>();
+
+        Contacto contacto = buscarContacto(nombre, apellido);
+
+        if (contacto == null) {
+            respuesta.put("exito", false);
+            respuesta.put("mensaje", "El contacto no existe.");
+            return respuesta;
+        }
+
+        contactos.remove(contacto);
+        respuesta.put("exito", true);
+        respuesta.put("mensaje", "Contacto eliminado correctamente.");
+
+        return respuesta;
+    }
+
 }
-
-
