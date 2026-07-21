@@ -4,6 +4,7 @@ import modelo.Contacto;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -28,6 +29,8 @@ public class ComponentesGraficos {
     private JButton botonEliminar;
     private JButton botonBuscar;
 
+    private List<Contacto> listaContactos = new ArrayList<>();
+
     public ComponentesGraficos() {
 
         createFrame();
@@ -36,14 +39,6 @@ public class ComponentesGraficos {
         renderInputs();
         renderButtonsLayout();
         renderSearch();
-
-        List<Contacto> contactosPrueba = Arrays.asList(
-                new Contacto("Pepito", "Perez", "+573014794421"),
-                new Contacto("Ana", "Lopez", "+573009876543"),
-                new Contacto("Marta", "Gomez", "+573151234567")
-        );
-
-        renderContacts(contactosPrueba);
 
         frame.setVisible(true);
     }
@@ -189,6 +184,12 @@ public class ComponentesGraficos {
             contactPanel.add(Box.createVerticalStrut(6));
         }
     }
+
+    public void actualizarContactos (List<Contacto> contactos) {
+        this.listaContactos = contactos;
+    }
+
+
 
     public JTextField getCampoNombre() {
         return campoNombre;
