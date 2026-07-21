@@ -90,7 +90,7 @@ public class Agenda {
         return respuesta;
     }
 
-    public Contacto buscarContacto(String nombre, String apellido) {
+    public Contacto buscarContactoInterno(String nombre, String apellido) {
 
         String nombreYApellido = nombre+apellido;
 
@@ -105,7 +105,7 @@ public class Agenda {
     }
 
 
-    public String buscarContactoTelefono(String nombre, String apellido) {
+    public String buscarContacto(String nombre, String apellido) {
 
         String nombreYApellido = nombre+apellido;
 
@@ -141,7 +141,7 @@ public class Agenda {
     public Map<String, Object> modificarTelefono(String nombre, String apellido, String nuevoTelefono) {
 
         Map<String, Object> respuesta = new HashMap<>();
-        Contacto contacto = buscarContacto(nombre, apellido);
+        Contacto contacto = buscarContactoInterno(nombre, apellido);
 
         if (contacto == null) {
             respuesta.put("exito", false);
@@ -167,7 +167,7 @@ public class Agenda {
 
         Map<String, Object> respuesta = new HashMap<>();
 
-        Contacto contacto = buscarContacto(nombre, apellido);
+        Contacto contacto = buscarContactoInterno(nombre, apellido);
 
         if (contacto == null) {
             respuesta.put("exito", false);
